@@ -6,10 +6,9 @@ app = FastAPI()
 # Allow your Netlify frontend to call this backend.
 # Update this list once you have your real Netlify URL.
 origins = [
-    "http://localhost:5173",          # local dev
-    "https://your-app-name.netlify.app",  # replace after Step 12
+    "http://localhost:5173",
+    "https://peppy-puppy-9df68c.netlify.app",
 ]
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
