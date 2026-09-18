@@ -6,7 +6,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px;
+  padding: 8px;
   box-sizing: border-box;
 }
 
@@ -15,9 +15,9 @@
   position: relative;
   width: 100%;
   max-width: 440px;
-  /* On desktop: maintain comfortable mobile app card height; on mobile: fit viewport */
-  height: min(calc(100dvh - 20px), 760px);
-  min-height: 580px;
+  /* Maintain comfortable height on desktop; fill screen on mobile */
+  height: min(calc(100dvh - 16px), 820px);
+  min-height: 600px;
   background-color: #fdf8ee;
   border: 2.5px solid #b83a24;
   border-radius: 22px;
@@ -33,10 +33,63 @@
   box-sizing: border-box;
 }
 
-/* Top section: AI Avatar + Speech bubble */
+/* 1. Top Section: Upper Gamusa Border Strip (matches bottom strip) */
+.role-top-border-wrapper {
+  width: 100%;
+  flex-shrink: 0;
+  line-height: 0;
+  position: relative;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.role-top-strip-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* Extreme Top Corner Brooches covering corner white spaces */
+.role-corner-brooch {
+  position: absolute;
+  top: 0;
+  width: 26%;
+  max-width: 115px;
+  height: auto;
+  display: block;
+  z-index: 4;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.role-corner-left {
+  left: 0;
+}
+
+.role-corner-right {
+  right: 0;
+}
+
+/* 2. Center Section: Avatar + Selection Cards balanced with even whitespace */
+.role-center-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* margin: auto 0 creates perfectly balanced, even whitespace between top border and bottom scenery */
+  margin: auto 0;
+  position: relative;
+  z-index: 2;
+  box-sizing: border-box;
+}
+
+/* AI Avatar & Speech bubble */
 .role-avatar-section {
   width: 100%;
-  padding: 12px 14px 0 14px;
+  padding: 0 14px;
   box-sizing: border-box;
   display: flex;
   justify-content: center;
@@ -50,7 +103,7 @@
   height: auto;
   display: block;
   object-fit: contain;
-  /* Negative margin pulls the cards flush up against her saree */
+  /* Negative margin pulls the cards flush up against her saree drape */
   margin-bottom: -16px;
   position: relative;
   z-index: 2;
@@ -58,7 +111,7 @@
   -webkit-user-drag: none;
 }
 
-/* Center section: Side-by-side selection cards */
+/* Side-by-side selection cards */
 .role-cards-grid {
   width: 100%;
   padding: 0 14px;
@@ -100,7 +153,7 @@
   -webkit-user-drag: none;
 }
 
-/* Hover, active, and focus interactions */
+/* Hover, active, and focus micro-interactions */
 .role-card-btn:hover {
   transform: translateY(-4px) scale(1.02);
   box-shadow: 0 10px 24px -4px rgba(184, 58, 36, 0.22);
@@ -118,10 +171,10 @@
   outline-offset: 3px;
 }
 
-/* Bottom section: Scenery illustration with Gamusa border */
+/* 3. Bottom Section: Assam Scenery with bottom Gamusa embroidery */
 .role-scenery-section {
   width: 100%;
-  margin-top: auto;
+  flex-shrink: 0;
   position: relative;
   z-index: 1;
   display: flex;
@@ -141,15 +194,20 @@
 /* Responsive tweaks for narrow mobile screens */
 @media (max-width: 380px) {
   .role-select-viewport {
-    padding: 6px;
+    padding: 4px;
   }
 
   .role-select-card {
     border-radius: 18px;
   }
 
+  .role-corner-brooch {
+    width: 28%;
+    max-width: 95px;
+  }
+
   .role-avatar-section {
-    padding: 10px 10px 0 10px;
+    padding: 0 10px;
   }
 
   .role-avatar-img {
@@ -170,16 +228,16 @@
   }
 }
 
-/* Responsive tweaks for tall phone viewports (e.g. iPhone 14/15/16, modern Androids) */
+/* Responsive tweaks for tall phone viewports */
 @media (min-height: 780px) and (max-width: 500px) {
   .role-select-card {
-    height: calc(100dvh - 16px);
+    height: calc(100dvh - 12px);
     max-height: none;
   }
 }
 
 /* Safeguard for very short screens (landscape or compact devices) */
-@media (max-height: 600px) {
+@media (max-height: 640px) {
   .role-select-viewport {
     padding: 4px;
     align-items: flex-start;
