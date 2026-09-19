@@ -6,7 +6,7 @@ import remMedImg    from '../assets/rem-med.png'
 import remFoodImg   from '../assets/rem-food.png'
 import remDocImg    from '../assets/rem-doc.png'
 import remWalkImg   from '../assets/rem-walk.png'
-import sceneryImg   from '../assets/role-bottom-scenery.png'
+import sceneryImg   from '../assets/role-scenery-full.png'
 import './ReminderPage.css'
 
 const INITIAL_REMINDERS = [
@@ -34,6 +34,22 @@ function ReminderPage({ onBack }) {
     setEditId(null)
   }
 
+  const speak = (e, rem) => {
+    e.stopPropagation()
+    if (!('speechSynthesis' in window)) return
+    window.speechSynthesis.cancel()
+    const utter = new SpeechSynthesisUtterance(rem.labelAs + ', ' + fmt(rem.time))
+    utter.lang = 'as-IN'
+    window.speechSynthesis.speak(utter)
+  }
+
+  const handleCardKey = (e, rem) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault()
+      openEdit(rem)
+    }
+  }
+
   const editing = reminders.find(r => r.id === editId)
 
   return (
@@ -44,7 +60,7 @@ function ReminderPage({ onBack }) {
           <img src={topStripImg} alt="" className="rem-top-strip" />
         </div>
 
-        {/* Right brooch â€” behind centre content */}
+        {/* Right brooch — behind centre content */}
         <img src={rightBrooch} alt="" aria-hidden="true" className="rem-right-brooch" />
 
         {/* Home button */}
@@ -65,11 +81,26 @@ function ReminderPage({ onBack }) {
           <ul className="rem-list" role="list">
             {reminders.map(rem => (
               <li key={rem.id} className="rem-list-item">
-                <button
+                <div
                   className={'rem-card-btn rem-card-btn--' + rem.color}
+                  role="button"
+                  tabIndex={0}
                   onClick={() => openEdit(rem)}
+                  onKeyDown={(e) => handleCardKey(e, rem)}
                   aria-label={rem.labelEn + ' reminder at ' + fmt(rem.time) + ', tap to edit'}
                 >
+                  <button
+                    className={'rem-speak-btn rem-speak-btn--' + rem.color}
+                    onClick={(e) => speak(e, rem)}
+                    aria-label={'Play ' + rem.labelEn + ' reminder'}
+                  >
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M4 9v6h4l5 5V4L8 9H4z"/>
+                      <path d="M16.5 8.5a4.5 4.5 0 0 1 0 7" stroke="currentColor" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
+                      <path d="M18.5 6a7.5 7.5 0 0 1 0 12" stroke="currentColor" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
+                    </svg>
+                  </button>
+
                   <div className={'rem-icon-wrap rem-icon-wrap--' + rem.color}>
                     <img src={rem.img} alt={rem.labelEn} className="rem-icon-img" />
                   </div>
@@ -82,8 +113,7 @@ function ReminderPage({ onBack }) {
                       {fmt(rem.time)}
                     </span>
                   </div>
-                  <span className="rem-chevron" aria-hidden="true">›</span>
-                </button>
+                </div>
               </li>
             ))}
           </ul>

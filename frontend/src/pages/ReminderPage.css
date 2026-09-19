@@ -127,30 +127,33 @@
   filter: drop-shadow(0 4px 10px rgba(0,0,0,0.06));
 }
 
-/* Reminder list placed comfortably below avatar */
+/* Reminder grid — square cards, 2 per row */
 .rem-list {
   list-style: none;
   margin: 0 0 6px 0;
   padding: 0;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
 }
 .rem-list-item { width: 100%; }
 
 .rem-card-btn {
+  position: relative;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 100%;
-  padding: 10px 14px;
-  gap: 12px;
-  border-radius: 18px;
+  aspect-ratio: 1 / 1;
+  padding: 6px 4px;
+  gap: 8px;
+  border-radius: 20px;
   border: 2.5px solid var(--bc);
   background: var(--bgc);
   cursor: pointer;
-  text-align: left;
+  text-align: center;
   transition: transform .20s cubic-bezier(.34,1.56,.64,1), box-shadow .20s ease;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
@@ -163,22 +166,61 @@
 .rem-card-btn--red    { --bc: #b83a24; --bgc: rgba(184,58,36,.09);  }
 .rem-card-btn--orange { --bc: #c96a1a; --bgc: rgba(201,106,26,.09); }
 
+/* Speaker button, top-right corner of each card */
+.rem-speak-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 3;
+  color: #fff;
+  box-shadow: 0 3px 8px rgba(0,0,0,.18);
+  transition: transform .16s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+.rem-speak-btn svg { width: 22px; height: 22px; }
+.rem-speak-btn:active { transform: scale(0.88); }
+.rem-speak-btn--green  { background: #3a7d44; }
+.rem-speak-btn--red    { background: #b83a24; }
+.rem-speak-btn--orange { background: #c96a1a; }
+
 .rem-icon-wrap {
-  width: 58px; height: 58px; flex-shrink: 0;
+  width: 96px; height: 96px;
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
 }
 .rem-icon-wrap--green  { background: rgba(58,125,68,.16);  }
 .rem-icon-wrap--red    { background: rgba(184,58,36,.16);  }
 .rem-icon-wrap--orange { background: rgba(201,106,26,.16); }
-.rem-icon-img { width: 82%; height: 82%; object-fit: contain; display: block; user-select: none; -webkit-user-drag: none; }
+.rem-icon-img { width: 88%; height: 88%; object-fit: contain; display: block; user-select: none; -webkit-user-drag: none; }
 
-.rem-card-text { flex: 1; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
-.rem-card-label { font-size: clamp(17px,4.8vw,23px); font-weight: 800; color: #2d1a00; line-height: 1.15; }
+.rem-card-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+.rem-card-label {
+  font-size: clamp(19px, 5.4vw, 26px);
+  font-weight: 800;
+  color: #2d1a00;
+  line-height: 1.15;
+}
 
 .rem-card-time {
   display: inline-flex; align-items: center; gap: 5px;
-  font-size: clamp(13px,3.6vw,16px); font-weight: 700;
+  font-size: clamp(14px, 4vw, 17px);
+  font-weight: 700;
   padding: 3px 10px; border-radius: 20px; width: fit-content;
 }
 .rem-card-time--green  { color: #2a6033; background: rgba(58,125,68,.18);  }
@@ -186,10 +228,25 @@
 .rem-card-time--orange { color: #7a3d0a; background: rgba(201,106,26,.18); }
 .rem-clock-svg { width: 15px; height: 15px; flex-shrink: 0; }
 
-.rem-chevron { font-size: 26px; font-weight: 300; color: #aaa; flex-shrink: 0; line-height: 1; }
+/* Bottom scenery — sits in normal flow, below the reminder cards */
+.rem-scenery {
+  width: 100%;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  line-height: 0;
+  pointer-events: none;
+}
 
-.rem-scenery { width: 100%; flex-shrink: 0; line-height: 0; pointer-events: none; position: relative; z-index: 1; }
-.rem-scenery-img { width: 100%; height: auto; display: block; user-select: none; -webkit-user-drag: none; }
+.rem-scenery-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
 
 .rem-overlay {
   position: fixed; inset: 0;
@@ -225,8 +282,10 @@
   .rem-card { border-radius: 18px; }
   .rem-center { padding: 4px 10px 6px; }
   .rem-avatar { width: 82%; }
-  .rem-icon-wrap { width: 50px; height: 50px; }
-  .rem-card-btn { border-radius: 14px; gap: 10px; padding: 8px 10px; }
+  .rem-icon-wrap { width: 78px; height: 78px; }
+  .rem-speak-btn { width: 34px; height: 34px; top: 6px; right: 6px; }
+  .rem-speak-btn svg { width: 18px; height: 18px; }
+  .rem-card-btn { border-radius: 16px; gap: 6px; padding: 4px 2px; }
 }
 @media (max-height: 640px) {
   .rem-viewport { align-items: flex-start; padding: 4px; }
