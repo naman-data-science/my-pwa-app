@@ -29,18 +29,29 @@ function PatientHome({ onChangeRole }) {
           <img src={topStripImg} alt="" className="patient-top-strip-img" />
         </div>
 
-        {/* Extreme Top Corner Decorative Brooches */}
+        {/* Back button — top-left, above the strip */}
+        <button
+          type="button"
+          className="patient-back-btn"
+          onClick={onChangeRole}
+          aria-label="Back to role selection"
+        >
+          &#8592;
+        </button>
+
+        {/* Left brooch — above strip */}
         <img
           src={topLeftBrooch}
           alt=""
           aria-hidden="true"
           className="patient-corner-brooch patient-corner-left"
         />
+        {/* Right brooch — behind grandma (z-index 1) */}
         <img
           src={topRightBrooch}
           alt=""
           aria-hidden="true"
-          className="patient-corner-brooch patient-corner-right"
+          className="patient-corner-brooch patient-corner-right patient-corner-right--behind"
         />
 
         {/* Center: Grandma Avatar & Panel Buttons */}

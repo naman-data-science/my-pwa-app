@@ -72,6 +72,45 @@
   right: 0;
 }
 
+/* Right brooch rendered behind the grandma / center content */
+.patient-corner-right--behind {
+  z-index: 1;
+}
+
+/* Back button - sits above the top strip, top-left corner */
+.patient-back-btn {
+  position: absolute;
+  top: 52px;
+  left: 14px;
+  z-index: 5;
+  background: #b83a24;
+  border: none;
+  border-radius: 50%;
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 900;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.18s ease, transform 0.18s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  line-height: 1;
+  box-shadow: 0 4px 12px rgba(184, 58, 36, 0.45);
+}
+
+.patient-back-btn:hover {
+  background: rgba(184, 58, 36, 0.1);
+  transform: scale(1.08);
+}
+
+.patient-back-btn:active {
+  transform: scale(0.93);
+}
+
 /* 2. Center Section: Avatar + Panel Cards */
 .patient-center-content {
   width: 100%;
